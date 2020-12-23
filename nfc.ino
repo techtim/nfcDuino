@@ -7,24 +7,25 @@
 #include "Keyboard.h"
 
 #include "Adafruit_PN532.h"
-#include <SPI.h>
 #include <Wire.h>
+#include <FastLED.h>
 
 // If using the breakout or shield with I2C, define just the pins connected
 // to the IRQ and reset lines.  Use the values below (2, 3) for the shield!
 #define PN532_IRQ (21)
 #define PN532_RESET (20)  // Not connected by default on the NFC Shield
 
-#include <FastLED.h>
+//////////////// LED CONF ///////////////////
 
 #define LED_PIN 9
 #define NUM_LEDS 200
-#define BRIGHTNESS 60
 #define LED_TYPE SK6812
 #define COLOR_ORDER GRB
 CRGB leds[NUM_LEDS];
 
 ///////////////// EDIT //////////////////////
+
+int BRIGHTNESS = 160;
 
 CRGB COLOR_OK = CRGB(0, 50, 250);
 CRGB COLOR_WRONG = CRGB(250, 0, 0);
@@ -43,7 +44,7 @@ int check(Adafruit_PN532 &nfc, const uint8_t uidCheck[]);
 // Or use this line for a breakout or shield with an I2C connection:
 Adafruit_PN532 nfc(PN532_IRQ, PN532_RESET);
 
-void toLog(char * str){
+void toLog(const char * str){
   if (Serial)
     Serial.println(str);
 }
