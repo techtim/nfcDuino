@@ -31,8 +31,8 @@ CRGB COLOR_OK = CRGB(0, 50, 250);
 CRGB COLOR_WRONG = CRGB(250, 0, 0);
 CRGB COLOR_NO = CRGB(0, 0, 0);
 
-const uint8_t cardUidLen = 6;
-const uint8_t cardUid[cardUidLen] = {0xA7, 0x96, 0x4C, 0xB5, 0xB5, 0xB5};
+const uint8_t cardUidLen = 4;
+const uint8_t cardUid[cardUidLen] = {0x53, 0xB0, 0x7A, 0x6B};
 
 const char cardKeyOk = '1';
 
@@ -143,15 +143,16 @@ int check(Adafruit_PN532 &nfc, const uint8_t uidCheck[]) {
     Serial.print(" 0x");
     Serial.print(uid[i], HEX);
   }
-  Serial.println("");
+  Serial.print(" - length=");
+  Serial.println(uidLength);
 
-  if (uidLength == cardUidLen) {
+  if (uidLength >= cardUidLen) {
     for (int i = 0; i < cardUidLen; ++i)
       if (uid[i] != uidCheck[i]) success = false;
   } else {
     success = false;
-    Serial.println(
-        "This doesn't seem to be an NTAG203 tag (UUID length != 4 bytes)!");
+    Serial.print("This doesn't seem to be an NTAG203 tag: UUID length != ");
+    Serial.println(cardUidLen);
   }
 
   Serial.flush();
