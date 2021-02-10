@@ -31,7 +31,8 @@ CRGB COLOR_OK = CRGB(0, 50, 250);
 CRGB COLOR_WRONG = CRGB(250, 0, 0);
 CRGB COLOR_NO = CRGB(0, 0, 0);
 
-const uint8_t cardUid[4] = {0xA7, 0x96, 0x4C, 0xB5};
+const uint8_t cardUidLen = 6;
+const uint8_t cardUid[cardUidLen] = {0xA7, 0x96, 0x4C, 0xB5, 0xB5, 0xB5};
 
 const char cardKeyOk = '1';
 
@@ -144,8 +145,8 @@ int check(Adafruit_PN532 &nfc, const uint8_t uidCheck[]) {
   }
   Serial.println("");
 
-  if (uidLength == 4) {
-    for (int i = 0; i < 4; ++i)
+  if (uidLength == cardUidLen) {
+    for (int i = 0; i < cardUidLen; ++i)
       if (uid[i] != uidCheck[i]) success = false;
   } else {
     Serial.println(
