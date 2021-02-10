@@ -52,7 +52,7 @@ void toLog(const char * str){
 
 void setup(void) {
   Keyboard.begin();
-  Serial.begin(115200);
+  // Serial.begin(115200);
 //  while (!Serial) delay(10);  // for Leonardo/Micro/Zero
 
   toLog("Hello!");
@@ -100,21 +100,21 @@ void loop(void) {
   int state = check(nfc, cardUid);
 
   if (state == 1) {
-    toLog(" Success");
+    // toLog(" Success");
     if (state != prevState)
       Keyboard.write(cardKeyOk);
     for (int led = 0; led < NUM_LEDS; ++led) {
       leds[led] = COLOR_OK;
     }
   } else if (state == 0) {
-    toLog(" Wrong");
+    // toLog(" Wrong");
     if (state != prevState)
       Keyboard.write(cardKeyError);
     for (int led = 0; led < NUM_LEDS; ++led) {
       leds[led] = COLOR_WRONG;
     }
   } else if (state == -1) {
-    toLog("No Card");
+    // toLog("No Card");
     for (int led = 0; led < NUM_LEDS; ++led) {
       leds[led] = COLOR_NO;
     }
@@ -138,24 +138,24 @@ int check(Adafruit_PN532 &nfc, const uint8_t uidCheck[]) {
 
   if (!success) return -1;
 
-  Serial.print("UID Value: ");
+  // Serial.print("UID Value: ");
   for (uint8_t i = 0; i < uidLength; i++) {
-    Serial.print(" 0x");
-    Serial.print(uid[i], HEX);
+    // Serial.print(" 0x");
+    // Serial.print(uid[i], HEX);
   }
-  Serial.print(" - length=");
-  Serial.println(uidLength);
+  // Serial.print(" - length=");
+  // toLog(uidLength);
 
   if (uidLength >= cardUidLen) {
     for (int i = 0; i < cardUidLen; ++i)
       if (uid[i] != uidCheck[i]) success = false;
   } else {
     success = false;
-    Serial.print("This doesn't seem to be an NTAG203 tag: UUID length != ");
-    Serial.println(cardUidLen);
+    // Serial.print("This doesn't seem to be an NTAG203 tag: UUID length != ");
+    // toLog(cardUidLen);
   }
 
-  Serial.flush();
+  // Serial.flush();
 
   // Wait 0.1 second before continuing
   delay(100);
