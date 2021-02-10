@@ -149,6 +149,7 @@ int check(Adafruit_PN532 &nfc, const uint8_t uidCheck[]) {
     for (int i = 0; i < cardUidLen; ++i)
       if (uid[i] != uidCheck[i]) success = false;
   } else {
+    success = false;
     Serial.println(
         "This doesn't seem to be an NTAG203 tag (UUID length != 4 bytes)!");
   }
